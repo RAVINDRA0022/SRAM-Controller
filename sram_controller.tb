@@ -1,0 +1,39 @@
+`timescale 1ns / 1ps
+
+module sram_memeory_controller_tb();
+reg clk;
+reg rst;
+reg rw;
+reg [3:0]addr;
+reg [7:0]data_in;
+wire [7:0]data_out;
+  
+    sram_memory_controller uut (.clk(clk), .rst(rst), .rw(rw), .data_in(data_in), .data_out(data_out) );
+   
+   always #10 clk = ~clk;
+    
+    initial 
+       begin 
+        
+        clk = 0;
+        rst = 1;
+        rw = 0;
+        addr = 0;
+        data_in = 0;
+
+        #10 rst = 0;
+
+        #10 rw = 1; addr = 4'h3; data_in = 8'hAA;
+
+        #10 rw = 1; addr = 4'h4; data_in = 8'h55;
+
+        #10 rw = 0; addr = 4'h3;
+
+        #10 rw = 0; addr = 4'h4;
+
+        
+
+        #20 $finish;
+    end
+
+endmodule
